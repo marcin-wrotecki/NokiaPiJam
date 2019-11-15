@@ -1,6 +1,6 @@
-# mfm
+# Smart mirror
 
-mfm is a smart mirror project running on Raspberry Pi.
+Smart mirror project running on Raspberry Pi with opencv.
 
 ## Installation
 ```
