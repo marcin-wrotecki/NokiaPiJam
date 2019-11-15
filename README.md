@@ -12,8 +12,10 @@ wget "https://raw.githubusercontent.com/Mjrovai/OpenCV-Face-Recognition/master/F
 
 ## Running
 ```
-git clone https://github.com/rafauu/mfm.git
-cd mfm
+git clone https://gitlab.com/RaspberryPiJam/nokia-pi-jam---smart-mirror.git
+cd nokia-pi-jam---smart-mirror
+echo 'export LD_PRELOAD=/usr/lib/arm-linux-gnueabihf/libatomic.so.1.2.0' >> ~/.bashrc
+source ~/.bashrc
 export FLASK_APP=server.py
 flask run
 python3 validate_face_detection.py //validate if your face is detected
