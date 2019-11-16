@@ -3,10 +3,11 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>mirror</title>
 </head>
 
-//set background to black
+
 <body>
 
 <script>
@@ -17,10 +18,94 @@
 
 //implement clock and date display
 //every 1s or 500ms get time and write it down to "date" and "clock" fields
+function getTime(){
+    let now = new Date();
+    let day = now.getDate();
+    let month = now.getMonth()+1;
+    let year = now.getFullYear();
 
+    let hour = now.getHours();
+    if (hour<10) hour = "0"+hour;
+
+    let minute = now.getMinutes();
+    if (minute<10)
+      minute = "0"+minute;
+
+      let seconds = now.getSeconds();
+    if (seconds<10)
+      seconds = "0"+seconds;
+
+    document.getElementById("clock").innerHTML = hour+":"+minute+":"+seconds;
+    document.getElementById("date").innerHTML= day+"/"+month+"/"+year;
+
+}
+
+let result;
+let flag=true;
+let request = new XMLHttpRequest();
+let server = "/landing";
+
+
+function getInfo(){
+request.open("GET", server, true);
+
+request.onload = function() {
+  if (this.status >= 200 && this.status < 400) {
+    // Success!
+    if(this.responseText!=result && !(~this.response.indexOf("empty")))
+        {
+          result=this.responseText;
+          document.getElementById("detectedName").innerHTML="Hi "+result+"!";
+        console.log("Result: ");
+		console.log(this.response);
+	}
+	  try{
+		  request.open("GET",server,true);
+		  setTimeout(function(){request.send();},200);
+	  }
+	  catch(e)
+	  {
+		  console.log("ERROR- send function - onload");
+	  }
+  } else {
+	  console.log("error");
+    // We reached our target server, but it returned an error
+
+  }
+};
+
+
+request.onerror = function() {
+  // There was a connection error of some sort
+	console.log('Cant connect with server)
+	try{
+	setTimeout(`request.open("GET", server, true)`,400);
+
+		setTimeout("request.send()",401);
+
+	}
+	catch (e){
+		console.log("ERROR-send function - oneerror");
+	};
+}
+try{
+  request.send();
+}
+catch(e)
+{
+	console.log("ERROR-send function - getInfo()");
+}
+}
+window.onload=function(){
+    window.setInterval("getTime()",1000);
+	getInfo()
+}
 </script>
 
 <style>
+body{
+background-color:black;
+}
 .dateStyle {
   position: absolute;
   top: 16px;
